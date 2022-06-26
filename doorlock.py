@@ -31,5 +31,5 @@ def open_door(flag: str):
 # input = "1"
 # open_door(input)
 
-input = input('code: ')
-open_door(input)
+# input = input('code: ')
+# open_door(input)

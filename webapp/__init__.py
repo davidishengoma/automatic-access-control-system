@@ -1,5 +1,5 @@
 
-from doorlock import open_door
+from faceapp.doorlock import open_door
 from flask import Flask, render_template, request, redirect, url_for
 import flask
 from webapp.gen_frames import gen_registration_frames, gen_detection_frames, train
