@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+
+{% block styles %}
+<style>
+    body {
+        background-color: #3a85b731;
+    }
+
+    .wrapper {
+        height: 100vh;
+        max-width: 540px;
+    }
+
+    .no-radius {
+        border-radius: 0%;
+        border-top: 10px solid #3A86B7;
+        border-bottom: 1px solid #3A86B7;
+        border-left: 1px solid #3A86B7;
+        border-right: 1px solid #3A86B7;
+        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+
+    .bg-future {
+        background-color: #3A86B7;
+        color: #FFFFFF;
+        font-family: Helvetica, sans-serif;
+        font-weight: 600;
+        text-indent: 10px;
+        word-spacing: 10px;
+        letter-spacing: .1em;
+    }
+
+    .img-frame {
+        border-radius: 20px;
+        display: flex;
+        padding: 0;
+        border: 3px solid #3a85b78a;
+        overflow: hidden;
+        margin: 10px;
+    }
+
+    .fcolor {
+        color: #3A86B7;
+    }
+
+    h1 {
+        color: #045e9b;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+        line-height: 20px;
+        margin-bottom: 20px;
+        opacity: .5;
+    }
+
+    input {
+        padding: 7px;
+        width: 100%;
+    }
+
+    p {width: 75%;display: flex;}
+
+
+    form {
+        background-color: #3A86B7;
+        color: #FFFFFF;
+        font-family: Helvetica, sans-serif;
+        font-weight: 600;
+        text-indent: 10px;
+        word-spacing: 10px;
+        letter-spacing: .1em;
+        padding: 20px;
+        border-radius: 20px;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container wrapper w-100 d-flex justify-content-center align-items-center">
+    <div class="w-100">
+        <h3 class="text-center mb-3">Admin Login</h3>
+
+        <form method="POST" action="/login" class="d-flex py-4 mb-4 flex-column justify-content-center align-items-center">
+            {{ form.csrf_token }}
+            <p>
+                <label for="">{{ form.username.label }}</label><br>
+                {{ form.username(size=20) }}
+            </p>
+            <p>
+                <label for="">{{ form.password.label }}</label><br>
+                {{ form.password(size=20) }}
+            </p>
+            <input class="btn btn-primary w-75" type="submit" value="Login">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

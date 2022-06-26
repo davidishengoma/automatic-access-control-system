@@ -1,0 +1,11 @@
+numpy==1.22.0
+opencv-contrib-python==4.5.5.62
+opencv-python
+Pillow==9.0.0
+XlsxWriter==3.0.2
+pyserial
+pyttsx3
+twilio
+flask
+flask-login
+flask-wtf

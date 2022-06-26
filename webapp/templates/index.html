@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+
+{% block styles %}
+<style>
+    body {
+        background-color: #3a85b731;
+    }
+
+    .wrapper {
+        height: 100vh;
+        max-width: 540px;
+    }
+
+    .no-radius {
+        border-radius: 0%;
+        border-top: 10px solid #3A86B7;
+        border-bottom: 1px solid #3A86B7;
+        border-left: 1px solid #3A86B7;
+        border-right: 1px solid #3A86B7;
+        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+
+    a {
+        text-decoration: none;
+        padding: 10px;
+    }
+
+    .bg-future {
+        background-color: #3A86B7;
+        color: #FFFFFF;
+        font-family: Helvetica, sans-serif;
+        font-weight: 600;
+        text-indent: 10px;
+        word-spacing: 10px;
+        letter-spacing: .1em;
+    }
+
+    .img-frame {
+        border-radius: 20px;
+        display: flex;
+        padding: 0;
+        border: 3px solid #3a85b78a;
+        overflow: hidden;
+        margin: 10px;
+    }
+
+    .fcolor {
+        color: #3A86B7;
+    }
+
+    h1 {
+        color: #045e9b;
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+        line-height: 20px;
+        margin-bottom: 20px;
+        opacity: .5;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container wrapper w-100 d-flex justify-content-center align-items-center">
+    <div class="w-100">
+        <div class="row">
+            <h1>{{ settings.TITLE }}</h1>
+        </div>
+        <div class="row mb-3">
+            <div class="col d-flex gap-3 justify-content-center">
+                <button class="btn ulist-btn" data-bs-toggle="modal" data-bs-target="#membersmodal">
+                    <i class="bi fcolor h4 bi-people"></i>
+                </button>
+                <button class="btn ulist-btn" data-bs-toggle="modal" data-bs-target="#settingsmodal">
+                    <i class="bi fcolor h4 bi-gear"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card no-radius w-100">
+            <div class="body">
+                <div class="row">
+                    <div class="col d-flex flex-column p-5">
+                        <button id="regbtn" class="btn mb-3 bg-future" data-bs-toggle="modal"
+                            data-bs-target="#regmodel">
+                            REGISTER NEW MEMBER
+                        </button>
+                        <button id="detbtn" class="btn bg-future" data-bs-toggle="modal" data-bs-target="#detmodal">
+                            DETECT FACE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" d-flex justify-content-center w-100">
+            <p class="text-center py-3 mt-4"><a class="d-flex w-100 text-center" href="/logout">Logout</a></p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Reg Modal -->
+<div class="modal fade" id="regmodel" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content no-radius">
+            <div class="modal-header">
+                <h5 class="modal-title">NEW MEMBER</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/reg_video_feed" method="post">
+
+                <div class="row">
+                    <div class="col">
+                            <input required type="text" placeholder="first_name" name="first_name" class="mb-3 form-control">
+                            <input required type="text" placeholder="last_name" name="last_name" class="mb-3 form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col img-frame" id="r_vid">
+                        <button type="submit" class="btn btn-sm w-100">START FACE REGISTRATION</a>
+                    </div>
+                </div>
+            </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-future" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn bg-future">SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- DETECT Modal -->
+<div class="modal fade" id="detmodal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content no-radius">
+            <div class="modal-header">
+                <h5 class="modal-title">DETECTION</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col img-frame" id="d_vid">
+                        <a class="btn btn-sm w-100" href="{{ url_for('det_video_feed') }}" >START DETECTION</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-future" data-bs-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- member list Modal -->
+<div class="modal fade" id="membersmodal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content no-radius">
+            <div class="modal-header">
+                <h5 class="modal-title">REGISTERED MEMBERS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        {% for member in members %}
+                        <div class="mb-3 d-flex">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <span>{{member.id}}</span>
+                            </div>
+                            <div class=" w-100 d-flex">
+
+                                <div class="">
+                                    <img class="img-frame" width="50" src="{{member.image}}" alt="">
+                                </div>
+                                <div class="d-flex w-75 justify-content-left align-items-center">
+                                    <span>{{ member.name }}</span>
+                                </div>
+                                <div class="d-flex w-25 justify-content-right align-items-center">
+                                    <a class="btn btn-sm btn-danger" href="{{ url_for('delete_user', id=member.id) }}">
+                                        delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-future" data-bs-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- settings Modal -->
+<div class="modal fade" id="settingsmodal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content no-radius">
+            <div class="modal-header">
+                <h5 class="modal-title">SETTINGS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <a href="/clear_data" class="btn bg-future my-3"> CLEAR ALL DATA</a>
+                    </div>
+                </div>
+                <br>
+                <h4>EDIT SETTINGS</h4>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <form action="/settings" method="post">
+                            TITLE: <input class="form-control" type="text" name="TITLE" value="{{settings.TITLE}}" id=""> <br>
+                            CAM_PORT: <input class="form-control" type="text" name="CAM_PORT" value="{{settings.CAM_PORT}}" id=""> <br>
+                            NUMBER_OF_RECORDS: <input class="form-control" type="text" name="NUMBER_OF_RECORDS" value="{{settings.NUMBER_OF_RECORDS}}" id=""> <br>
+                            DOORLOCK_PORT: <input class="form-control" type="text" name="DOORLOCK_PORT" value="{{settings.DOORLOCK_PORT}}" id=""> <br>
+                            TWILIO_ACCOUNT_SID: <input class="form-control" type="text" name="TWILIO_ACCOUNT_SID" value="{{settings.TWILIO_ACCOUNT_SID}}" id=""> <br>
+                            TWILIO_AUTH_TOKEN: <input class="form-control" type="text" name="TWILIO_AUTH_TOKEN" value="{{settings.TWILIO_AUTH_TOKEN}}" id=""> <br>
+                            PHONE_NUMBERS: <input class="form-control" type="text" name="PHONE_NUMBERS" value="{{settings.PHONE_NUMBERS}}" id=""> <br>
+                            ADMIN_USERNAME: <input class="form-control" type="text" name="ADMIN_USERNAME" value="{{settings.ADMIN_USERNAME}}" id=""> <br>
+                            ADMIN_PASSWORD: <input class="form-control" type="password" name="ADMIN_PASSWORD" value="{{settings.ADMIN_PASSWORD}}" id=""> <br>
+                            <hr>
+                            <button type="submit" class="btn bg-future">SAVE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-future" data-bs-dismiss="modal">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script>
+
+    var dbtn = document.getElementById("detbtn");
+    var rbtn = document.getElementById("regbtn");
+
+
+</script>
+{% endblock %}
